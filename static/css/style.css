@@ -1,0 +1,191 @@
+/* static/css/style.css */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    margin: 20px; /* Margin around header */
+    position: sticky; /* Make header sticky */
+    top: 20px; /* Stick 20px from the top */
+    z-index: 1000;
+}
+.main-header .logo { font-size: 1.8em; font-weight: bold; }
+.main-header nav a.nav-item {
+    margin-left: 15px;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: inherit;
+    border-radius: 8px; /* Smaller radius for nav items */
+}
+
+.content-wrapper {
+    flex-grow: 1;
+    padding: 0 20px; /* Padding for content area below header */
+    margin-top: 20px; /* Space below sticky header */
+}
+
+.builder-container {
+    display: flex;
+    gap: 20px;
+    height: calc(100vh - 180px); /* Adjust based on header/footer */
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+#parts-palette {
+    flex-basis: 350px;
+    padding: 20px;
+    overflow-y: auto;
+}
+.part-category h3 { margin-top: 0; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 8px; }
+.part-list .draggable-part {
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: grab;
+    display: flex;
+    align-items: center;
+}
+.draggable-part img { width: 50px; height: 50px; object-fit: contain; margin-right: 10px; border-radius: 4px;}
+
+#build-area {
+    flex-grow: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+.pc-case-visual {
+    flex-grow: 1;
+    background-color: rgba(0,0,0,0.1); /* Darker inner area */
+    border-radius: 8px;
+    padding: 20px;
+    display: grid; /* Using grid for slot layout */
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    align-content: start; /* Align items to the start of the grid */
+    overflow-y: auto; /* If many slots */
+    border: 1px dashed rgba(255,255,255,0.2);
+}
+.component-slot {
+    border: 2px dashed rgba(255,255,255,0.3);
+    padding: 15px;
+    min-height: 120px;
+    border-radius: 8px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.component-slot.drag-over {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(100, 150, 255, 0.8);
+}
+.component-slot .slot-label { display: block; margin-bottom: 8px; font-size: 0.9em; }
+.component-slot img { max-width: 80px; max-height: 60px; object-fit: contain; }
+.component-slot .slot-placeholder-img { opacity: 0.3; }
+.component-slot .dropped-part-img { opacity: 1; } /* Placeholder images are replaced */
+
+#build-summary {
+    margin-top: 20px;
+    padding: 20px;
+}
+#build-summary h3 { margin-top: 0; }
+#selected-parts-list { list-style: none; padding: 0; margin-bottom: 15px; }
+#selected-parts-list li { padding: 5px 0; display: flex; align-items: center; }
+#selected-parts-list li img { width: 30px; height: 30px; object-fit: contain; margin-right: 8px; }
+#check-compatibility-btn {
+    padding: 12px 25px;
+    font-size: 1em;
+    border: none;
+    cursor: pointer;
+    display: block;
+    margin: 10px auto 0;
+}
+#compatibility-results { margin-top: 15px; padding: 10px; border-radius: 6px; }
+#compatibility-results.compatible { background-color: rgba(40, 167, 69, 0.5); color: #d4edda; }
+#compatibility-results.incompatible { background-color: rgba(220, 53, 69, 0.5); color: #f8d7da; }
+
+.main-footer {
+    text-align: center;
+    padding: 15px;
+    margin: 20px; /* Margin around footer */
+}
+
+/* OS Guide Specific */
+.guide-content { padding: 30px; max-width: 900px; margin: 20px auto; }
+.guide-content h1, .guide-content h2, .guide-content h3 { border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 8px; margin-bottom: 15px;}
+.guide-content ul, .guide-content ol { margin-left: 25px; line-height: 1.7; }
+.guide-content code { background-color: rgba(0,0,0,0.3); padding: 3px 6px; border-radius: 4px; font-family: 'Courier New', Courier, monospace;}
+.guide-content a { color: #8ab4f8; text-decoration: none; }
+.guide-content a:hover { text-decoration: underline; }
+
+
+.summary-buttons {
+    display: flex; /* Arrange buttons in a row */
+    gap: 10px;     /* Space between buttons */
+    margin-top: 15px; /* Space above the buttons */
+    margin-bottom: 10px; /* Space below the buttons */
+    flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+}
+
+/* Style for the new clear button if you want it to look different */
+#clear-build-btn.danger-button {
+    /* Example: Mica-friendly red tint */
+    background-color: rgba(220, 53, 69, 0.6); /* Bootstrap's danger red, with Mica transparency */
+    color: #f8d7da; /* Light text for dark red */
+    border: 1px solid rgba(220, 53, 69, 0.8);
+}
+
+#clear-build-btn.danger-button:hover {
+    background-color: rgba(200, 40, 50, 0.7);
+}
+
+/* Ensure mica-item styles apply if not already generic enough */
+.mica-item {
+    /* ... your existing mica-item styles ... */
+    padding: 10px 15px; /* Example padding, adjust as needed */
+    border-radius: 8px; /* Example border-radius */
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.12); /* Assuming dark mica base */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+button.mica-item { /* Specific to buttons */
+    border: none; /* Often buttons with mica style look better without default browser border */
+}
+#parts-palette h2 {
+    margin-bottom: 15px; /* Add some space below the title before search */
+}
+
+.search-bar-container {
+    display: flex; /* Allows button to be side-by-side if you add one */
+    margin-bottom: 20px; /* Space below the search bar */
+    padding: 8px; /* Padding inside the mica-item wrapper */
+    border-radius: 8px; /* Consistent with other mica items */
+}
+
+#part-search-input {
+    flex-grow: 1; /* Input takes available space */
+    padding: 10px 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Mica-friendly border */
+    border-radius: 6px;
+    background-color: rgba(20, 20, 20, 0.5); /* Darker input field on dark mica */
+    color: #e0e0e0; /* Light text */
+    font-size: 1em;
+    outline: none; /* Remove default outline */
+}
+
+#part-search-input::placeholder {
+    color: #a0a0a0;
+}
+
+#part-search-input:focus {
+    border-color: #8ab4f8; /* Accent color on focus */
+    box-shadow: 0 0 0 2px rgba(138, 180, 248, 0.3); /* Subtle focus ring */
+}

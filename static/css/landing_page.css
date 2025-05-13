@@ -1,0 +1,317 @@
+/* static/css/landing_page.css */
+
+/* --- Hero Section --- */
+.landing-hero {
+    display: flex;
+    flex-direction: column; /* Stack on small screens */
+    align-items: center;
+    justify-content: space-between;
+    padding: 60px 30px;
+    margin: 20px;
+    text-align: center;
+    min-height: 70vh; /* Good height for hero */
+    gap: 30px;
+}
+
+.hero-content {
+    max-width: 700px;
+    animation: fadeInSlideUp 0.8s ease-out forwards;
+}
+
+.landing-hero h1 {
+    font-size: 2.8em; /* Responsive font size */
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    color: #f0f1f2; /* Assuming dark mica base */
+}
+
+.landing-hero .highlight {
+    color: #8ab4f8; /* Accent color - choose one that fits your Mica */
+    /* Consider a subtle text shadow for pop */
+    text-shadow: 0 0 10px rgba(138, 180, 248, 0.3);
+}
+
+.landing-hero .subtitle {
+    font-size: 1.2em;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    color: #c0c1c2; /* Slightly lighter than main text */
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-cta-buttons {
+    display: flex;
+    flex-wrap: wrap; /* Allow buttons to wrap on small screens */
+    gap: 15px;
+    justify-content: center;
+}
+
+.cta-button {
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1.1em;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: inline-flex; /* For icon alignment */
+    align-items: center;
+    gap: 8px;
+    border: none; /* If using mica-item as base */
+}
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+.cta-button.primary {
+    background-color: #8ab4f8; /* Accent color */
+    color: #1e1e1e; /* Dark text on light button */
+}
+.cta-button.primary.mica-item { /* Override mica-item default if needed */
+     background-color: rgba(138, 180, 248, 0.9); /* Make it less transparent */
+     color: #1e1e1e;
+}
+.cta-button.primary.mica-item:hover {
+    background-color: rgba(138, 180, 248, 1);
+}
+
+
+.cta-button.secondary {
+    /* background-color: transparent; */ /* Let mica-item handle this */
+    /* border: 2px solid #8ab4f8; */ /* Or rely on mica border */
+    color: #8ab4f8;
+}
+.cta-button.secondary.mica-item {
+    background-color: rgba(60,60,60,0.7); /* Darker transparent for secondary */
+}
+.cta-button.secondary.mica-item:hover {
+    background-color: rgba(75,75,75,0.8);
+}
+
+
+.hero-visual {
+    max-width: 450px; /* Adjust as needed */
+    animation: fadeInSlideRight 0.8s ease-out 0.2s forwards; /* Delayed animation */
+    opacity: 0; /* Start hidden for animation */
+}
+.hero-visual img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    /* Optional: add a subtle glow or filter if the image needs it */
+    /* filter: drop-shadow(0 0 15px rgba(138, 180, 248, 0.2)); */
+}
+
+/* --- Section Styling --- */
+.features-section, .how-it-works-section, .testimonial-section, .final-cta-section {
+    padding: 60px 20px;
+    margin: 40px 20px; /* Add margin around mica surfaces too */
+    text-align: center;
+}
+
+
+
+.section-title {
+    font-size: 2.2em;
+    margin-bottom: 40px;
+    font-weight: 600;
+}
+.section-title .highlight {
+    color: #8ab4f8;
+}
+
+/* --- Features Grid --- */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.feature-card {
+    padding: 30px;
+    text-align: left; /* Align text left within cards */
+    /* mica-surface properties are inherited if applied to .feature-card */
+    animation: popIn 0.5s ease-out forwards;
+    opacity: 0; /* Start hidden */
+}
+.feature-card:nth-child(1) { animation-delay: 0.1s; }
+.feature-card:nth-child(2) { animation-delay: 0.2s; }
+.feature-card:nth-child(3) { animation-delay: 0.3s; }
+.feature-card:nth-child(4) { animation-delay: 0.4s; }
+
+
+.feature-icon {
+    font-size: 2.5em; /* Placeholder for icons */
+    color: #8ab4f8;
+    margin-bottom: 15px;
+    /* If using Font Awesome or similar: */
+    /* display: inline-block; width: 50px; height: 50px; line-height: 50px; text-align: center; */
+}
+.feature-card h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+.feature-card p {
+    font-size: 1em;
+    line-height: 1.6;
+    color: #b0b1b2;
+}
+
+/* --- How It Works Section --- */
+.steps-container {
+    display: flex;
+    flex-wrap: wrap; /* Allow steps to wrap */
+    justify-content: space-around;
+    gap: 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.step-card {
+    padding: 25px;
+    flex-basis: 300px; /* Grow but have a base size */
+    flex-grow: 1;
+    position: relative;
+    /* mica-item properties are inherited */
+}
+.step-number {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 1.8em;
+    font-weight: bold;
+    color: rgba(138, 180, 248, 0.5); /* Accent color, semi-transparent */
+}
+.step-icon {
+    font-size: 2.8em;
+    color: #8ab4f8;
+    margin-bottom: 15px;
+}
+.step-card h4 {
+    font-size: 1.3em;
+    margin-bottom: 10px;
+}
+.step-card p {
+    font-size: 0.95em;
+    line-height: 1.5;
+    color: #b0b1b2;
+}
+
+/* --- Testimonial Section --- */
+.testimonial-slider {
+    display: flex;
+    flex-wrap: wrap; /* Simple wrap for now, actual slider needs JS */
+    justify-content: center;
+    gap: 25px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+.testimonial-card {
+    padding: 25px;
+    flex-basis: calc(50% - 30px); /* Two cards per row, accounting for gap */
+    min-width: 280px; /* Ensure readability on smaller wrap */
+    /* mica-surface properties inherited */
+}
+.testimonial-card p {
+    font-style: italic;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+.testimonial-card cite {
+    font-weight: bold;
+    color: #8ab4f8;
+    font-style: normal;
+}
+
+/* --- Final CTA Section --- */
+.final-cta-section h2 {
+    font-size: 2em;
+    margin-bottom: 15px;
+}
+.final-cta-section p {
+    font-size: 1.1em;
+    margin-bottom: 30px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    color: #c0c1c2;
+}
+.cta-button.large {
+    padding: 18px 40px;
+    font-size: 1.2em;
+}
+
+/* --- Icons (Placeholder - use Font Awesome or SVGs) --- */
+/* Example if you were to use pseudo-elements for simple icons */
+[class^="icon-"]::before {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    /* Add actual icon content here if using a font or unicode */
+    /* Example: content: '\f085'; font-family: "Font Awesome 5 Free"; font-weight: 900; */
+    margin-right: 8px; /* If inside buttons */
+}
+.icon-build::before { content: "⚙️"; } /* Example Emoji */
+.icon-guide::before { content: "📖"; }
+.icon-interactive::before { content: "🖱️"; }
+.icon-mica::before { content: "✨"; }
+.icon-os::before { content: "💻"; }
+.icon-responsive::before { content: "📱"; }
+.icon-drag::before { content: "🖐️"; }
+.icon-check::before { content: "✔️"; }
+.icon-save::before { content: "💾"; }
+.icon-rocket::before { content: "🚀"; }
+
+
+/* --- Animations --- */
+@keyframes fadeInSlideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInSlideRight {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+@keyframes popIn {
+    0% { opacity: 0; transform: scale(0.8); }
+    80% { opacity: 1; transform: scale(1.05); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+
+/* --- Responsiveness --- */
+@media (min-width: 768px) {
+    .landing-hero {
+        flex-direction: row; /* Side-by-side on larger screens */
+        text-align: left;
+        padding: 80px 50px;
+    }
+    .hero-content {
+        max-width: 55%;
+    }
+    .hero-visual {
+        max-width: 40%;
+    }
+    .hero-cta-buttons {
+        justify-content: flex-start;
+    }
+    .landing-hero .subtitle {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 767px) {
+    .landing-hero h1 { font-size: 2.2em; }
+    .landing-hero .subtitle { font-size: 1em; }
+    .cta-button { font-size: 1em; padding: 12px 24px; }
+    .section-title { font-size: 1.8em; }
+    .features-grid { grid-template-columns: 1fr; } /* Stack features */
+    .testimonial-card { flex-basis: 100%; } /* Stack testimonials */
+}

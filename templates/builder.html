@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+{% block title %}Interactive PC Builder{% endblock %}
+
+{% block content %}
+<div class="builder-container">
+    <aside id="parts-palette" class="mica-surface">
+        <h2>Available Parts</h2>
+        <div class="search-bar-container mica-item">
+            <input type="text" id="part-search-input" placeholder="Search parts by name...">
+        </div>
+        {% for category, items in parts_db.items() %}
+        <div class="part-category">
+            <h3>{{ category.replace('_', ' ').title() }}</h3>
+            <div class="part-list">
+                {% for item in items %}
+                <div class="draggable-part mica-item" draggable="true"
+                     data-part-id="{{ item.id }}"
+                     data-part-type="{{ item.type }}"
+                     data-part-name="{{ item.name | lower }}"
+                     data-part-img="{{ url_for('static', filename='images/' + item.img if item.img else 'images/' + item.type + '_placeholder.png') }}">
+                    <img src="{{ url_for('static', filename='images/' + item.img if item.img else 'images/' + item.type + '_placeholder.png') }}" alt="{{ item.name }}">
+                    <span>{{ item.name }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </aside>
+
+    <section id="build-area" class="mica-surface">
+        <h2>Your Custom PC Build</h2>
+        <div class="pc-case-visual"> <!-- Visual representation of a case -->
+            <div class="component-slot" id="motherboard-slot" data-drop-target-type="motherboard"
+                 data-placeholder-img-src="{{ url_for('static', filename='images/motherboard_placeholder.png') }}"> {# Keep for reset logic #}
+                <span class="slot-label">Motherboard</span>
+                {# IMAGE TAG REMOVED #}
+            </div>
+            <div class="component-slot" id="cpu-slot" data-drop-target-type="cpu"
+                 data-placeholder-img-src="{{ url_for('static', filename='images/cpu_placeholder.png') }}"> {# Keep for reset logic #}
+                <span class="slot-label">CPU</span>
+                {# IMAGE TAG REMOVED #}
+            </div>
+            <div class="component-slot" id="ram-slot" data-drop-target-type="ram"
+                 data-placeholder-img-src="{{ url_for('static', filename='images/ram_placeholder.png') }}"> {# Keep for reset logic #}
+                <span class="slot-label">RAM</span>
+                {# IMAGE TAG REMOVED #}
+            </div>
+            <div class="component-slot" id="gpu-slot" data-drop-target-type="gpu"
+                 data-placeholder-img-src="{{ url_for('static', filename='images/gpu_placeholder.png') }}"> {# Keep for reset logic #}
+                <span class="slot-label">GPU</span>
+                {# IMAGE TAG REMOVED #}
+            </div>
+            <div class="component-slot" id="psu-slot" data-drop-target-type="psu"
+                 data-placeholder-img-src="{{ url_for('static', filename='images/psu_placeholder.png') }}"> {# Keep for reset logic #}
+                <span class="slot-label">PSU</span>
+                {# IMAGE TAG REMOVED #}
+            </div>
+            <div class="component-slot" id="storage-slot" data-drop-target-type="storage"
+                 data-placeholder-img-src="{{ url_for('static', filename='images/storage_placeholder.png') }}"> {# Keep for reset logic #}
+                <span class="slot-label">Storage</span>
+                {# IMAGE TAG REMOVED #}
+            </div>
+            <div class="component-slot" id="case-slot" data-drop-target-type="case"
+                 data-placeholder-img-src="{{ url_for('static', filename='images/case_placeholder.png') }}"> {# Keep for reset logic #}
+                <span class="slot-label">Case</span>
+                {# IMAGE TAG REMOVED #}
+            </div>
+        </div>
+
+        <div id="build-summary" class="mica-item">
+            <h3>Current Configuration:</h3>
+            <ul id="selected-parts-list">
+                <!-- Selected parts will be listed here by JS -->
+            </ul>
+            <div class="summary-buttons">
+                <button id="check-compatibility-btn" class="mica-item">Check Compatibility</button>
+                <button id="clear-build-btn" class="mica-item danger-button">Clear Build</button>
+            </div>
+            <div id="compatibility-results"></div>
+        </div>
+    </section>
+</div>
+{% endblock %}

@@ -1,0 +1,429 @@
+{% extends "layout.html" %}
+{% block title %}Comprehensive OS Installation Guide{% endblock %}
+
+{% block head_extra %}
+<style>
+    /* Basic styling for tabs - you'll want to make this prettier */
+    .os-tabs {
+        display: flex;
+        margin-bottom: 20px;
+        border-bottom: 2px solid rgba(255,255,255,0.2); /* Mica-friendly border */
+    }
+    .os-tab-button {
+        padding: 10px 20px;
+        cursor: pointer;
+        border: none;
+        background-color: transparent;
+        color: #c0c1c2; /* Mica-friendly text */
+        font-size: 1.1em;
+        border-bottom: 3px solid transparent; /* For active state */
+        transition: color 0.3s, border-bottom-color 0.3s;
+    }
+    .os-tab-button:hover {
+        color: #f0f1f2;
+    }
+    .os-tab-button.active {
+        color: #8ab4f8; /* Accent color */
+        border-bottom-color: #8ab4f8; /* Accent color */
+        font-weight: bold;
+    }
+    .os-tab-content {
+        display: none; /* Hidden by default */
+    }
+    .os-tab-content.active {
+        display: block; /* Shown when tab is active */
+        animation: fadeInContent 0.5s ease-out;
+    }
+    @keyframes fadeInContent {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .guide-content ul, .guide-content ol {
+        margin-bottom: 15px;
+    }
+    .guide-content li {
+        margin-bottom: 8px;
+    }
+    .guide-content strong { color: #e0e1e2; } /* Slightly brighter for emphasis */
+    .guide-content .important-note {
+        background-color: rgba(255, 229, 100, 0.1); /* Mica-friendly yellow tint */
+        border-left: 4px solid #ffe564;
+        padding: 10px 15px;
+        margin: 15px 0;
+        border-radius: 4px;
+        color: #ffe564;
+    }
+     .guide-content .warning-note {
+        background-color: rgba(255, 100, 100, 0.1); /* Mica-friendly red tint */
+        border-left: 4px solid #ff6464;
+        padding: 10px 15px;
+        margin: 15px 0;
+        border-radius: 4px;
+        color: #ffbaba;
+    }
+    .guide-content .code-inline {
+        background-color: rgba(0,0,0,0.4);
+        padding: 2px 5px;
+        border-radius: 3px;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 0.9em;
+    }
+    .guide-content img.step-image { /* Style for hypothetical images */
+        max-width: 100%;
+        height: auto;
+        border-radius: 6px;
+        margin: 10px 0;
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<article class="guide-content mica-surface">
+    <h1>Comprehensive Operating System Installation Guide</h1>
+    <p>Welcome! This guide provides step-by-step instructions for installing popular desktop operating systems. Select your desired OS below to begin.</p>
+
+    <nav class="os-tabs">
+        <button class="os-tab-button active" onclick="openOSTab(event, 'Windows')">Windows</button>
+        <button class="os-tab-button" onclick="openOSTab(event, 'Linux')">Linux</button>
+        <button class="os-tab-button" onclick="openOSTab(event, 'macOS')">macOS (on Custom PCs)</button>
+    </nav>
+
+    <!-- General Preparation - Applies to all OS -->
+    <section id="general-preparation">
+        <h2>I. Universal Preparation Steps</h2>
+        <ol>
+            <li>
+                <strong>Backup Your Data:</strong>
+                <p>Before making any significant changes like installing a new OS, <strong>ALWAYS back up your important files</strong> from existing drives to an external hard drive, cloud storage, or another computer. Data loss can occur if something goes wrong.</p>
+            </li>
+            <li>
+                <strong>Gather Necessary Tools & Information:</strong>
+                <ul>
+                    <li>A <strong>USB flash drive</strong> (minimum 8GB, 16GB+ recommended). This will be erased, so ensure it doesn't contain important data.</li>
+                    <li>Access to another working computer with an internet connection (to download the OS and create the bootable USB).</li>
+                    <li><strong>Product Key (if applicable):</strong> For retail versions of Windows, have your product key ready. Some OEM systems have keys embedded in firmware. Linux is generally free. macOS on custom PCs doesn't use traditional product keys in the same way.</li>
+                    <li><strong>Motherboard & Component Drivers:</strong> It's wise to pre-download essential drivers, especially for your Network/Wi-Fi adapter, chipset, and graphics card, from the manufacturers' websites. Store them on a separate USB or the bootable OS USB if there's space.</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Understand Your Hardware:</strong>
+                <p>Know your CPU (Intel/AMD), motherboard model, and graphics card. This is crucial for driver selection and troubleshooting, especially for Linux and macOS on custom PCs.</p>
+            </li>
+        </ol>
+    </section>
+    <hr style="border-color: rgba(255,255,255,0.1); margin: 30px 0;">
+
+    <!-- Windows Installation Guide -->
+    <div id="Windows" class="os-tab-content active">
+        <h2>II. Installing Windows (e.g., Windows 10 / Windows 11)</h2>
+        <section>
+            <h3>A. Creating Bootable Windows USB</h3>
+            <ol>
+                <li>On a working Windows PC, go to the official Microsoft website to download the <strong>Windows Media Creation Tool</strong> for your desired version (e.g., Windows 10 or Windows 11).
+                    <ul>
+                        <li>Windows 10: <a href="https://www.microsoft.com/software-download/windows10" target="_blank" rel="noopener noreferrer">Download Windows 10</a></li>
+                        <li>Windows 11: <a href="https://www.microsoft.com/software-download/windows11" target="_blank" rel="noopener noreferrer">Download Windows 11</a></li>
+                    </ul>
+                </li>
+                <li>Run the Media Creation Tool. Accept the license terms.</li>
+                <li>Select "Create installation media (USB flash drive, DVD, or ISO file) for another PC" and click Next.</li>
+                <li>Choose your language, edition (usually pre-selected or matches your current license), and architecture (usually 64-bit). Click Next.</li>
+                <li>Select "USB flash drive" and click Next.</li>
+                <li>Plug in your USB drive (ensure it's at least 8GB and has no important data). Select it from the list and click Next.</li>
+                <li>The tool will download Windows and create the bootable USB drive. This may take some time.</li>
+            </ol>
+        </section>
+
+        <section>
+            <h3>B. BIOS/UEFI Configuration for Windows</h3>
+            <ol>
+                <li>Plug the bootable Windows USB into the new PC you're building or the PC you're installing Windows on.</li>
+                <li>Start the PC and immediately press the key to enter BIOS/UEFI setup. Common keys are <code class="code-inline">Del</code>, <code class="code-inline">F2</code>, <code class="code-inline">F10</code>, <code class="code-inline">F12</code>, or <code class="code-inline">Esc</code>. The key is often displayed briefly on startup or in your motherboard manual.</li>
+                <li>
+                    <strong>Boot Order:</strong> Navigate to the "Boot" or "Boot Priority" section. Set the USB drive as the <strong>first boot device</strong>. Your USB drive might be listed by its name or as "UEFI USB Device."
+                    <div class="important-note">For modern systems, booting in UEFI mode is recommended over Legacy/CSM mode for better security and features. Ensure your USB is prepared for UEFI booting if your system supports it (Media Creation Tool usually handles this).</div>
+                </li>
+                <li>
+                    <strong>Secure Boot:</strong> For Windows 10/11, Secure Boot should generally be **Enabled** for optimal security if your hardware supports it.
+                </li>
+                <li>
+                    <strong>SATA Mode:</strong> Ensure your SATA controller is set to **AHCI** mode (not IDE or RAID, unless you have a specific RAID setup).
+                </li>
+                <li>Save changes and exit BIOS/UEFI. The PC will restart.</li>
+            </ol>
+        </section>
+
+        <section>
+            <h3>C. Windows Installation Process</h3>
+            <ol>
+                <li>The PC should now boot from the USB drive, and you'll see the Windows Setup screen.</li>
+                <li>Select your language, time and currency format, and keyboard input method. Click Next.</li>
+                <li>Click "Install now."</li>
+                <li>Enter your Windows product key if prompted. If you don't have one yet or are reinstalling on a PC that was previously activated, you might be able to select "I don't have a product key."</li>
+                <li>Select the edition of Windows you want to install (e.g., Windows 10/11 Home, Pro). This should match your product key.</li>
+                <li>Accept the license terms and click Next.</li>
+                <li>
+                    Choose the installation type: Select <strong>"Custom: Install Windows only (advanced)"</strong>.
+                    <div class="warning-note">Do NOT choose "Upgrade" if you are doing a clean install on a new PC or want to wipe an existing drive.</div>
+                </li>
+                <li>
+                    <strong>Drive Partitioning:</strong>
+                    <ul>
+                        <li><strong>New Drive:</strong> If it's a brand new, unformatted drive, you'll see "Drive 0 Unallocated Space" (or similar). Select it and click "New." Windows will suggest a size (usually the full size). Click "Apply." Windows will create several necessary partitions (System, MSR, Primary). Select the "Primary" partition (the largest one) and click "Next."</li>
+                        <li><strong>Existing Drive (Clean Install):</strong> If the drive has old partitions you want to remove, select each existing partition on the target drive one by one and click "Delete." <strong>WARNING: THIS ERASES ALL DATA ON THOSE PARTITIONS.</strong> Once you have only "Unallocated Space" on the target drive, proceed as with a new drive.</li>
+                        <li><strong>Formatting:</strong> If you want to install on an existing partition without deleting others (e.g., dual boot), select the desired partition and click "Format" (this erases data on that partition only), then "Next."</li>
+                    </ul>
+                </li>
+                <li>Windows will now copy files and install. Your PC will restart several times during this process. Do not press any keys when it asks to boot from CD/DVD/USB after the first restart from the setup.</li>
+                <li>
+                    <strong>Out-of-Box Experience (OOBE):</strong> After the installation, Windows will guide you through the initial setup (region, keyboard layout, network connection, account creation/sign-in, privacy settings, Cortana setup, etc.). Follow the on-screen prompts.
+                    <div class="important-note">For Windows 11, an internet connection and a Microsoft Account are often required during setup for Home editions. Pro editions may offer an offline account option.</div>
+                </li>
+            </ol>
+        </section>
+        <!-- Post-Install section moved to general post-install -->
+    </div>
+
+    <!-- Linux Installation Guide -->
+    <div id="Linux" class="os-tab-content">
+        <h2>II. Installing Linux (e.g., Ubuntu, Mint, Fedora)</h2>
+        <section>
+            <h3>A. Choosing a Distribution & Creating Bootable Linux USB</h3>
+            <ol>
+                <li>
+                    <strong>Choose a Linux Distribution:</strong> There are many! Popular choices for beginners include:
+                    <ul>
+                        <li><strong>Ubuntu:</strong> Very popular, large community, user-friendly. (<a href="https://ubuntu.com/download/desktop" target="_blank" rel="noopener noreferrer">Download Ubuntu</a>)</li>
+                        <li><strong>Linux Mint:</strong> Based on Ubuntu, known for its traditional desktop and multimedia codecs out-of-the-box. (<a href="https://linuxmint.com/download.php" target="_blank" rel="noopener noreferrer">Download Linux Mint</a>)</li>
+                        <li><strong>Fedora Workstation:</strong> Cutting-edge, sponsored by Red Hat, great for developers. (<a href="https://getfedora.org/workstation/download/" target="_blank" rel="noopener noreferrer">Download Fedora</a>)</li>
+                    </ul>
+                    Download the ".ISO" image file for your chosen distribution.
+                </li>
+                <li>
+                    <strong>Create Bootable USB:</strong>
+                    <ul>
+                        <li>Use a tool like <a href="https://rufus.ie/" target="_blank" rel="noopener noreferrer">Rufus</a> (Windows), <a href="https://www.balena.io/etcher/" target="_blank" rel="noopener noreferrer">balenaEtcher</a> (Windows, macOS, Linux), or the "Startup Disk Creator" (often built into Linux distributions).</li>
+                        <li>Open the tool, select the downloaded Linux .ISO file, select your USB drive, and start the process. Ensure "Partition scheme" is set to GPT and "Target system" to UEFI if your system is modern (Rufus options).</li>
+                    </ul>
+                </li>
+            </ol>
+        </section>
+
+        <section>
+            <h3>B. BIOS/UEFI Configuration for Linux</h3>
+            <ol>
+                <li>Plug the bootable Linux USB into the target PC.</li>
+                <li>Enter BIOS/UEFI setup (as described in Windows section).</li>
+                <li>
+                    <strong>Boot Order:</strong> Set the USB drive as the first boot device.
+                </li>
+                <li>
+                    <strong>Secure Boot:</strong> This can be tricky.
+                    <ul>
+                        <li>Some distributions like Ubuntu support Secure Boot out-of-the-box.</li>
+                        <li>Others may require you to **Disable Secure Boot** in the BIOS/UEFI settings. If you have trouble booting, try disabling it.</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>SATA Mode:</strong> AHCI is generally recommended.
+                </li>
+                <li>
+                    <strong>Fast Boot / Quick Boot:</strong> Some BIOS settings have "Fast Boot" options that might skip USB detection. If your USB isn't booting, try disabling Fast Boot.
+                </li>
+                <li>Save changes and exit. The PC will restart.</li>
+            </ol>
+        </section>
+
+        <section>
+            <h3>C. Linux Installation Process (Example: Ubuntu)</h3>
+            <ol>
+                <li>The PC should boot from the USB. You'll often see a GRUB menu or a direct boot into a "live" environment.</li>
+                <li>
+                    <strong>Try or Install:</strong> Most distributions offer an option to "Try Ubuntu" (or similar) without installing. This lets you test hardware compatibility. When ready, click the "Install Ubuntu" (or similar) icon on the desktop or from the initial menu.
+                </li>
+                <li>Select your language and click Continue.</li>
+                <li>Select your keyboard layout and click Continue.</li>
+                <li>
+                    <strong>Updates and other software:</strong>
+                    <ul>
+                        <li>Connect to Wi-Fi if possible.</li>
+                        <li>Choose "Normal installation" (includes web browser, utilities, office software, games, media players) or "Minimal installation" (web browser and basic utilities).</li>
+                        <li>Optionally, check "Download updates while installing Ubuntu" and "Install third-party software for graphics and Wi-Fi hardware, and additional media formats." (Recommended for most users).</li>
+                    </ul>
+                    Click Continue.
+                </li>
+                <li>
+                    <strong>Installation type:</strong> This is the most critical step.
+                    <ul>
+                        <li><strong>"Erase disk and install Ubuntu":</strong> This will wipe the entire selected hard drive and install Ubuntu as the only OS. <strong>WARNING: DELETES ALL DATA ON THE DISK.</strong> Simplest option for a dedicated Linux PC.</li>
+                        <li><strong>"Install Ubuntu alongside Windows Boot Manager" (or similar):</strong> If Windows is already installed, the installer might detect it and offer to resize Windows partition and install Linux in the new space (dual boot).</li>
+                        <li><strong>"Something else":</strong> For manual partitioning. This gives you full control to create/resize/delete partitions. Recommended for advanced users or specific dual-boot setups. You'll typically need to create at least:
+                            <ul>
+                                <li>A root partition (mount point <code class="code-inline">/</code>, ext4 filesystem, e.g., 30GB+).</li>
+                                <li>A swap partition (optional if you have lots of RAM, typically size of RAM or double for hibernation, filesystem <code class="code-inline">linux-swap</code>).</li>
+                                <li>(UEFI Systems) An EFI System Partition (ESP) if one doesn't exist or you're installing on a separate drive (FAT32, ~500MB, mount point <code class="code-inline">/boot/efi</code>). The installer usually handles this if you choose an automated option.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    Select your preferred option. If erasing or installing alongside, confirm the changes to the disk. Click "Install Now."
+                </li>
+                <li>If you chose manual partitioning, you'll need to create partitions and assign mount points.</li>
+                <li>Select your geographical location (timezone) and click Continue.</li>
+                <li>Create your user account: Enter your name, computer's name, pick a username, and choose a strong password. Click Continue.</li>
+                <li>The installation will now proceed, copying files and setting up the system. This can take some time.</li>
+                <li>Once complete, you'll be prompted to restart the computer. Remove the USB drive when asked.</li>
+            </ol>
+        </section>
+        <!-- Post-Install section moved to general post-install -->
+    </div>
+
+    <!-- macOS (Hackintosh) Installation Guide -->
+    <div id="macOS" class="os-tab-content">
+        <h2>II. Installing macOS on Custom PCs ("Hackintosh")</h2>
+        <div class="warning-note">
+            <strong>Important Caveat:</strong> Installing macOS on non-Apple hardware (a "Hackintosh") is a complex, unofficial process that violates Apple's End User License Agreement (EULA) for macOS. It requires specific compatible hardware, significant research, patience, and troubleshooting. Success is not guaranteed, and system stability can vary. This guide provides a very high-level overview; detailed guides like Dortania's OpenCore Install Guide are essential.
+        </div>
+        <section>
+            <h3>A. Pre-Requisites and Research (Crucial)</h3>
+            <ol>
+                <li>
+                    <strong>Hardware Compatibility:</strong> This is paramount. Not all PC components are compatible.
+                    <ul>
+                        <li><strong>CPU:</strong> Most modern Intel CPUs are well-supported. AMD CPUs require more work and specific patches (AMD Vanilla patches).</li>
+                        <li><strong>Motherboard:</strong> Chipset compatibility is key (e.g., Z390, Z490, Z590, Z690, B-series often work). BIOS settings are critical.</li>
+                        <li><strong>GPU:</strong> AMD Radeon GPUs (RX 500/5000/6000 series) generally have the best native support. NVIDIA support is very limited for newer macOS versions (Kepler GPUs are the last well-supported, newer ones like Turing/Ampere mostly don't work). Intel integrated graphics (iGPU) can work but may need configuration.</li>
+                        <li><strong>Wi-Fi/Bluetooth:</strong> Specific Broadcom chips are natively supported (often requiring a replacement M.2 card). Some Intel Wi-Fi/BT can be made to work with kexts.</li>
+                        <li><strong>Ethernet:</strong> Many Intel and Realtek ethernet controllers work with appropriate kexts.</li>
+                        <li><strong>NVMe SSDs:</strong> Most work, but some specific models can cause issues.</li>
+                    </ul>
+                    Consult resources like <a href="https://dortania.github.io/OpenCore-Install-Guide/buyers-guide/" target="_blank" rel="noopener noreferrer">Dortania's Anti-Hardware Buyer's Guide</a>.
+                </li>
+                <li>
+                    <strong>Bootloader - OpenCore:</strong> <a href="https://dortania.github.io/OpenCore-Install-Guide/" target="_blank" rel="noopener noreferrer">OpenCore</a> is the current standard bootloader for Hackintoshes. It's powerful but has a steep learning curve. Avoid outdated tools like UniBeast/MultiBeast.
+                </li>
+                <li>
+                    <strong>Access to a Mac or existing Hackintosh/macOS VM:</strong> You'll need this to download macOS from the App Store and create the USB installer.
+                </li>
+                <li>
+                    <strong>Patience and Willingness to Learn:</strong> This is not a plug-and-play process.
+                </li>
+            </ol>
+        </section>
+
+        <section>
+            <h3>B. Creating Bootable macOS USB with OpenCore</h3>
+            <p>This is a highly involved process. The <a href="https://dortania.github.io/OpenCore-Install-Guide/installer-guide/" target="_blank" rel="noopener noreferrer">Dortania OpenCore Install Guide</a> is the definitive resource. A simplified overview:</p>
+            <ol>
+                <li><strong>Download macOS:</strong> From the App Store on a real Mac or existing Hackintosh (e.g., macOS Monterey, Ventura, Sonoma).</li>
+                <li><strong>Format USB Drive:</strong> On macOS, use Disk Utility to format your USB drive as "Mac OS Extended (Journaled)" with a GUID Partition Map (GPT).</li>
+                <li><strong>Create macOS Installer:</strong> Use the <code class="code-inline">createinstallmedia</code> command in Terminal to make the USB bootable with the downloaded macOS installer.</li>
+                <li>
+                    <strong>Gather Kexts and SSDTs:</strong>
+                    <ul>
+                        <li><strong>Kexts (Kernel Extensions):</strong> These are like drivers. Essential ones include Lilu, VirtualSMC, WhateverGreen (for graphics), AppleALC (for audio), and kexts for your Ethernet/Wi-Fi.</li>
+                        <li><strong>SSDTs (System Description Table):</strong> These are ACPI patches to make your hardware appear more Mac-like. You'll often need pre-built ones or learn to create custom ones (e.g., SSDT-EC, SSDT-PLUG, SSDT-AWAC/RTC).</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Configure OpenCore (`config.plist`):</strong> This is the core of your Hackintosh setup. You'll create an EFI folder on your USB, place OpenCore files, kexts, SSDTs, and ACPI drivers. The `config.plist` file needs to be meticulously configured for your specific hardware (CPU generation, chipset, devices, quirks, etc.). Tools like ProperTree are used to edit it. Dortania's guide walks through each section.
+                </li>
+                <li>Copy the configured EFI folder to the EFI partition of your USB installer.</li>
+            </ol>
+        </section>
+
+        <section>
+            <h3>C. BIOS/UEFI Configuration for macOS (Hackintosh)</h3>
+            <p>These settings are critical and vary by motherboard. General guidelines (refer to Dortania's guide for specifics):</p>
+            <ul>
+                <li>Disable: Fast Boot, Secure Boot, Serial/COM Port, Parallel Port, VT-d (can be enabled if DisableIoMapper quirk is set), CSM (Compatibility Support Module), Thunderbolt (unless specifically configuring it), Intel SGX, Intel Platform Trust.</li>
+                <li>Enable: VT-x, Above 4G decoding, Hyper-Threading, Execute Disable Bit, EHCI/XHCI Hand-off, OS type: Windows 8.1/10 UEFI Mode or Other OS, DVMT Pre-Allocated (iGPU Memory): 64MB or higher.</li>
+                <li>SATA Mode: AHCI.</li>
+            </ul>
+            <p>Set USB drive as the first boot device. Save and exit.</p>
+        </section>
+
+        <section>
+            <h3>D. macOS Installation Process (Hackintosh)</h3>
+            <ol>
+                <li>Boot from the OpenCore USB installer. You should see the OpenCore boot picker. Select the macOS installer.</li>
+                <li>If it boots successfully into the macOS Utilities screen (verbose text may scroll by first):
+                    <ul>
+                        <li>Open <strong>Disk Utility</strong>.</li>
+                        <li>Select your target SSD/HDD for macOS. Click "Erase." Name it (e.g., "Macintosh HD"), choose **APFS** as the format, and "GUID Partition Map" as the scheme. Click Erase. Close Disk Utility.</li>
+                    </ul>
+                </li>
+                <li>Select "Install macOS [Version Name]" and click Continue.</li>
+                <li>Follow the on-screen prompts, agreeing to the license and selecting your newly formatted APFS drive as the destination.</li>
+                <li>The first stage of installation will copy files and then restart. The PC should automatically boot from the USB again, and OpenCore should now show an option like "macOS Installer" or the name of your drive. Select it to continue installation. This may happen a few times.</li>
+                <li>Eventually, it will boot into the macOS welcome screen/setup assistant.</li>
+                <li>
+                    <strong>Post-Install:</strong>
+                    <ul>
+                        <li>Copy the EFI folder from your USB's EFI partition to the EFI partition of your main macOS drive. This makes your system bootable without the USB.</li>
+                        <li>Install necessary kexts not already in your EFI, configure audio, graphics acceleration, USB mapping, Wi-Fi/Bluetooth, iServices (iMessage, FaceTime - requires careful SMBIOS configuration), power management, etc. This is a significant part of the Hackintosh process.</li>
+                        <li>Refer extensively to Dortania's Post-Install guide.</li>
+                    </ul>
+                </li>
+            </ol>
+            <div class="important-note">Troubleshooting is common. If you get stuck, search forums like r/hackintosh, InsanelyMac, or TonyMacx86 (though the latter focuses more on their tools) with detailed information about your hardware and the issue.</div>
+        </section>
+    </div>
+
+    <!-- General Post-Installation - Applies to all OS -->
+    <section id="general-post-install">
+        <hr style="border-color: rgba(255,255,255,0.1); margin: 30px 0;">
+        <h2>III. Universal Post-Installation Steps</h2>
+        <ol>
+            <li>
+                <strong>Install Drivers:</strong>
+                <ul>
+                    <li><strong>Windows:</strong> Windows Update usually finds many drivers. However, always install the latest chipset drivers from your motherboard manufacturer and graphics drivers from NVIDIA/AMD/Intel directly. Check Device Manager for any devices with yellow exclamation marks.</li>
+                    <li><strong>Linux:</strong> Most hardware works out-of-the-box. For NVIDIA graphics, you might want to install proprietary drivers via the "Additional Drivers" tool (Ubuntu/Mint) or package manager. For some Wi-Fi cards, you might need to find specific firmware or drivers.</li>
+                    <li><strong>macOS (Hackintosh):</strong> This is an ongoing process of ensuring all kexts are correct and hardware is properly configured (as mentioned in its post-install section).</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Update the Operating System:</strong>
+                <ul>
+                    <li><strong>Windows:</strong> Run Windows Update repeatedly until no more important updates are found.</li>
+                    <li><strong>Linux:</strong> Open a terminal and run commands like <code class="code-inline">sudo apt update && sudo apt upgrade -y</code> (for Debian/Ubuntu-based) or <code class="code-inline">sudo dnf upgrade -y</code> (for Fedora).</li>
+                    <li><strong>macOS:</strong> Check for Software Updates in System Settings/Preferences. Be cautious with major OS updates on a Hackintosh; always check community compatibility first.</li>
+                </ul>
+            </li>
+            <li><strong>Install Essential Software:</strong> Web browsers (Chrome, Firefox), office suite (LibreOffice, Microsoft Office), media players (VLC), security software (if desired), and any specific applications you need.</li>
+            <li><strong>Customize Settings:</strong> Adjust display resolution, personalize your desktop, set power options, configure privacy settings, etc.</li>
+            <li><strong>Test Everything:</strong> Ensure audio, video, networking, USB ports, and peripherals are working correctly.</li>
+            <li><strong>(Optional) Restore Data:</strong> If you backed up data earlier, restore your personal files.</li>
+            <li><strong>Remove Bootable USB:</strong> You can now remove the installation USB. If needed, go back into BIOS/UEFI and set your main OS drive (e.g., "Windows Boot Manager" or your Linux/macOS drive) as the primary boot device.</li>
+        </ol>
+        <p>Congratulations! Your new operating system should be ready to use.</p>
+    </section>
+
+    <p><strong>Disclaimer:</strong> This is a general guide. Specific steps, prompts, and interfaces may vary based on your hardware, chosen OS version, and distribution. Always refer to official documentation and reputable community guides if unsure or for advanced configurations.</p>
+</article>
+
+<script>
+function openOSTab(evt, osName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("os-tab-content");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+        tabcontent[i].classList.remove("active");
+    }
+    tablinks = document.getElementsByClassName("os-tab-button");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].classList.remove("active");
+    }
+    document.getElementById(osName).style.display = "block";
+    document.getElementById(osName).classList.add("active");
+    evt.currentTarget.classList.add("active");
+}
+
+// Ensure the first tab is active on page load
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelector('.os-tab-button.active').click();
+});
+</script>
+{% endblock %}

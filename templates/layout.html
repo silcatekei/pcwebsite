@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}PC Builder Pro{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mica.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block head_extra %}{% endblock %}
+</head>
+<body>
+    <div class="background-overlay"></div>
+    <header class="mica-surface main-header">
+        <div class="logo">PC Builder Pro</div>
+        <nav>
+            <a href="{{ url_for('landing_page_route') }}" class="mica-item nav-item">Home</a>
+            <a href="{{ url_for('builder_page') }}" class="mica-item nav-item">Builder</a>
+            <a href="{{ url_for('os_guide') }}" class="mica-item nav-item">OS Guide</a>
+        </nav>
+    </header>
+
+    <main class="content-wrapper">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="mica-surface main-footer">
+        <p>© 2025 PC BUILD</p>
+    </footer>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
