@@ -62,6 +62,10 @@ def builder_page():
 def os_guide():
     return render_template('os_guide.html')
 
+@app.route('/assembly-guide')
+def assembly_guide_page():
+    return render_template('assembly_guide.html')
+
 @app.route('/api/parts/<part_type_plural>') # Use part_type_plural for consistency
 def get_parts_by_type(part_type_plural):
     # Ensure the key matches how it's stored in PC_PARTS_DATA (e.g., "cpus", not "cpu")

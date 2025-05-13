@@ -1,0 +1,440 @@
+{% extends "layout.html" %}
+{% block title %}PC Assembly & Disassembly Guide{% endblock %}
+
+{% block head_extra %}
+{# Re-use styles from os_guide.html or create common guide styles #}
+<style>
+    /* --- Styles from os_guide.html (or a common guide.css) --- */
+    .guide-content { /* Main container for guide text */
+        padding: 30px;
+        max-width: 900px;
+        margin: 20px auto; /* Centers the content */
+        /* mica-surface class will be applied in HTML for the background */
+    }
+    .guide-content h1, .guide-content h2, .guide-content h3 {
+        border-bottom: 1px solid rgba(255,255,255,0.2); /* Mica-friendly border */
+        padding-bottom: 8px;
+        margin-top: 30px; /* Space above H2s */
+        margin-bottom: 15px;
+    }
+    .guide-content h1 { margin-top: 0; }
+    .guide-content ul, .guide-content ol {
+        margin-left: 25px;
+        line-height: 1.7;
+        margin-bottom: 15px;
+    }
+    .guide-content li { margin-bottom: 8px; }
+    .guide-content p { margin-bottom: 15px; line-height: 1.6; }
+    .guide-content strong { color: #e0e1e2; } /* Slightly brighter for emphasis */
+    .guide-content code.code-inline {
+        background-color: rgba(0,0,0,0.4);
+        padding: 2px 5px;
+        border-radius: 3px;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 0.9em;
+    }
+    .guide-content a { color: #8ab4f8; text-decoration: none; }
+    .guide-content a:hover { text-decoration: underline; }
+
+    .important-note {
+        background-color: rgba(255, 229, 100, 0.1); /* Mica-friendly yellow tint */
+        border-left: 4px solid #ffe564;
+        padding: 10px 15px;
+        margin: 15px 0;
+        border-radius: 4px;
+        color: #ffe564; /* Text color for the note */
+    }
+    .warning-note {
+        background-color: rgba(255, 100, 100, 0.1); /* Mica-friendly red tint */
+        border-left: 4px solid #ff6464;
+        padding: 10px 15px;
+        margin: 15px 0;
+        border-radius: 4px;
+        color: #ffbaba; /* Text color for the warning */
+    }
+    .safety-first {
+        background-color: rgba(100, 150, 255, 0.1); /* Mica-friendly blue tint */
+        border-left: 4px solid #6496ff;
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 4px;
+        color: #aaccff;
+    }
+    .safety-first h3 { margin-top:0; border-bottom: none; color: #cde0ff;}
+
+    .guide-content img.step-image { /* Style for hypothetical images */
+        max-width: 100%;
+        height: auto;
+        border-radius: 6px;
+        margin: 15px auto; /* Center images */
+        display: block;
+        border: 1px solid rgba(255,255,255,0.1);
+        background-color: rgba(0,0,0,0.1); /* If images have transparency */
+    }
+    .component-list li {
+        font-weight: bold;
+    }
+    .sub-steps { margin-left: 20px; } /* For nested lists */
+
+    /* Tab styling (if you want to switch between Assembly and Disassembly) */
+    .guide-tabs {
+        display: flex;
+        margin-bottom: 20px;
+        border-bottom: 2px solid rgba(255,255,255,0.2);
+    }
+    .guide-tab-button {
+        padding: 10px 20px;
+        cursor: pointer;
+        border: none;
+        background-color: transparent;
+        color: #c0c1c2;
+        font-size: 1.1em;
+        border-bottom: 3px solid transparent;
+        transition: color 0.3s, border-bottom-color 0.3s;
+    }
+    .guide-tab-button:hover { color: #f0f1f2; }
+    .guide-tab-button.active {
+        color: #8ab4f8;
+        border-bottom-color: #8ab4f8;
+        font-weight: bold;
+    }
+    .guide-tab-content { display: none; }
+    .guide-tab-content.active {
+        display: block;
+        animation: fadeInContent 0.5s ease-out; /* Reuse from OS guide if defined */
+    }
+    @keyframes fadeInContent { /* Ensure this is defined if not already */
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+</style>
+{% endblock %}
+
+{% block content %}
+<article class="guide-content mica-surface"> {# Apply mica-surface here #}
+    <h1>PC Assembly & Disassembly Guide</h1>
+    <p>Building or upgrading your own PC can be a rewarding experience! This guide will walk you through the steps for assembling a new computer and disassembling an existing one. Remember to work carefully and consult your component manuals for specific instructions.</p>
+
+    <div class="safety-first">
+        <h3><i class="icon-shield"></i> Safety First & Best Practices!</h3>
+        <ul>
+            <li><strong>Anti-Static Precautions:</strong> Static electricity can damage components. Work on a hard, non-carpeted surface. Ground yourself frequently by touching an unpainted metal object or use an anti-static wrist strap connected to a grounded point.</li>
+            <li><strong>Unplug Power:</strong> ALWAYS unplug the PC from the wall outlet and press the power button a few times (to discharge residual power) before opening the case or handling components.</li>
+            <li><strong>Handle with Care:</strong> Hold components by their edges. Avoid touching gold contacts or circuitry.</li>
+            <li><strong>No Force:</strong> Components should fit together smoothly. If you're using excessive force, something is likely misaligned or incompatible. Stop and re-check.</li>
+            <li><strong>Read Manuals:</strong> Your motherboard, case, and CPU cooler manuals are your best friends. They contain specific instructions for your hardware.</li>
+            <li><strong>Good Lighting:</strong> Work in a well-lit area.</li>
+            <li><strong>Tools:</strong> You'll primarily need Phillips head screwdrivers (magnetic tips are helpful), zip ties or Velcro straps for cable management, and potentially an anti-static wrist strap.</li>
+            <li><strong>Keep Screws Organized:</strong> Use small containers or a magnetic tray to keep track of different screws.</li>
+        </ul>
+    </div>
+
+    <nav class="guide-tabs">
+        <button class="guide-tab-button active" onclick="openGuideTab(event, 'Assembly')">PC Assembly</button>
+        <button class="guide-tab-button" onclick="openGuideTab(event, 'Disassembly')">PC Disassembly</button>
+    </nav>
+
+    <div id="Assembly" class="guide-tab-content active">
+        <h2>Part I: Assembling Your PC</h2>
+        <p>This section covers building a PC from scratch. We assume you have all your components ready.</p>
+        <img src="{{ url_for('static', filename='images/guide_assembly_overview.avif') }}" alt="PC Components Laid Out" class="step-image">
+        <em>(Ideal image: All PC components laid out neatly before starting)</em>
+
+        <section id="assembly-prep">
+            <h3>1. Preparation & Case Setup</h3>
+            <ol>
+                <li><strong>Unbox Everything:</strong> Carefully unbox all your components. Check for any physical damage. Keep original packaging in case of returns/RMAs.</li>
+                <li><strong>Prepare the Case:</strong>
+                    <ul>
+                        <li>Open the case (usually by removing side panels - consult your case manual).</li>
+                        <li>Install motherboard standoffs if they are not pre-installed. These create space between the motherboard and the case tray to prevent short circuits. Align them with the screw holes on your motherboard.</li>
+                        <li>Install the I/O shield that came with your motherboard into the rectangular cutout at the back of the case. It snaps in from the inside. Ensure it's oriented correctly.</li>
+                    </ul>
+                </li>
+            </ol>
+        </section>
+
+        <section id="assembly-cpu-ram-mobo">
+            <h3>2. CPU, RAM, and M.2 SSD Installation (on Motherboard - "Pre-Assembly")</h3>
+            <p>It's often easier to install these components on the motherboard before placing it in the case.</p>
+            <ol>
+                <li><strong>Install the CPU:</strong>
+                    <img src="{{ url_for('static', filename='images/guide_cpu_install.webp') }}" alt="Installing CPU" class="step-image">
+                    <em>(Ideal image: CPU being carefully aligned with socket)</em>
+                    <ul>
+                        <li>Open the CPU socket lever on the motherboard.</li>
+                        <li>Align the triangle/arrow/notch on the CPU with the corresponding mark on the socket. For Intel CPUs with LGA sockets, align the notches on the CPU sides with the keys in the socket. For AMD CPUs with PGA sockets, align the pins.</li>
+                        <li>Gently place the CPU into the socket. It should drop in without force. <strong>Do not force it!</strong></li>
+                        <li>Close the socket lever/retention arm.</li>
+                    </ul>
+                </li>
+                <li><strong>Install RAM (Memory Modules):</strong>
+                    <img src="{{ url_for('static', filename='images/guide_ram_install.jpg') }}" alt="Installing RAM" class="step-image">
+                    <em>(Ideal image: RAM module being pressed into slot)</em>
+                    <ul>
+                        <li>Open the clips at one or both ends of the RAM slots on the motherboard.</li>
+                        <li>Consult your motherboard manual for which slots to use if installing fewer modules than available slots (e.g., for dual-channel, typically slots A2 and B2, or the 2nd and 4th slots from the CPU).</li>
+                        <li>Align the notch on the bottom edge of the RAM module with the key in the RAM slot.</li>
+                        <li>Apply even pressure to both ends of the RAM module until it clicks into place and the clips close.</li>
+                    </ul>
+                </li>
+                <li><strong>(Optional) Install M.2 NVMe SSD:</strong>
+                    <img src="{{ url_for('static', filename='images/guide_m2_install.jpg') }}" alt="Installing M.2 SSD" class="step-image">
+                    <em>(Ideal image: M.2 SSD being inserted and screwed down)</em>
+                    <ul>
+                        <li>Locate the M.2 slot(s) on your motherboard. Some may be under heatsinks which need to be removed first.</li>
+                        <li>Remove the M.2 screw from the standoff.</li>
+                        <li>Insert the M.2 SSD into the slot at a slight angle (around 20-30 degrees).</li>
+                        <li>Gently press the M.2 drive down and secure it with the M.2 screw. Do not overtighten. If there was a heatsink, reinstall it.</li>
+                    </ul>
+                </li>
+            </ol>
+        </section>
+
+        <section id="assembly-mobo-in-case">
+            <h3>3. Installing the Motherboard into the Case</h3>
+            <ol>
+                <li>Carefully lower the motherboard (with CPU, RAM, M.2 SSD installed) into the case, aligning its screw holes with the standoffs you installed earlier. The motherboard's ports should align with the I/O shield.</li>
+                <li>Secure the motherboard to the standoffs using the correct screws (usually Phillips head screws with a wide, flat top). Start with a corner screw but don't tighten fully until a few are in place. Do not overtighten.</li>
+            </ol>
+        </section>
+
+        <section id="assembly-gpu">
+            <h3>4. Installing the Graphics Card (GPU)</h3>
+            <img src="{{ url_for('static', filename='images/guide_gpu_install.webp') }}" alt="Installing GPU" class="step-image">
+            <em>(Ideal image: GPU being aligned with PCIe slot)</em>
+            <ol>
+                <li>Locate the primary PCIe x16 slot on your motherboard (usually the topmost long slot, closest to the CPU).</li>
+                <li>Remove the corresponding metal slot cover(s) from the back of the PC case.</li>
+                <li>Open the retaining clip at the end of the PCIe slot if it has one.</li>
+                <li>Align the GPU's gold connector edge with the PCIe slot and press down firmly and evenly until it clicks into place.</li>
+                <li>Secure the GPU's mounting bracket to the case with a screw.</li>
+            </ol>
+        </section>
+
+        <section id="assembly-storage">
+            <h3>5. Installing Storage Drives (SATA SSDs/HDDs)</h3>
+            <ol>
+                <li>Locate the drive bays in your PC case (2.5-inch for SSDs, 3.5-inch for HDDs).</li>
+                <li>Mount the SSD/HDD into a drive bay or tray using the appropriate screws. Some cases have tool-less mechanisms.</li>
+                <li>Connect a SATA data cable from the drive to a SATA port on your motherboard.</li>
+                <li>(Power connection will be done with the PSU later).</li>
+            </ol>
+        </section>
+
+        <section id="assembly-psu">
+            <h3>6. Installing the Power Supply Unit (PSU)</h3>
+            <img src="{{ url_for('static', filename='images/guide_psu_install.webp') }}" alt="Installing PSU" class="step-image">
+            <em>(Ideal image: PSU being placed into its bay)</em>
+            <ol>
+                <li>Place the PSU into its designated bay in the case (usually at the bottom or top rear). Ensure the PSU fan is oriented correctly (typically facing downwards if there's a bottom vent in the case, or inwards if not).</li>
+                <li>Secure the PSU to the case from the outside with four screws.</li>
+            </ol>
+        </section>
+
+        <section id="assembly-cpu-cooler">
+            <h3>7. Installing the CPU Cooler</h3>
+            <p>This step can vary greatly depending on whether you're using the stock cooler, an aftermarket air cooler, or an All-In-One (AIO) liquid cooler. <strong>Consult your CPU cooler's manual for specific instructions.</strong></p>
+            <ul>
+                <li><strong>Stock/Air Coolers:</strong>
+                    <ul>
+                        <li>If your cooler doesn't have pre-applied thermal paste, apply a small pea-sized amount (or a thin line/X pattern) of thermal paste to the center of the CPU's IHS (Integrated Heat Spreader).</li>
+                        <li>Align the cooler with the mounting holes/brackets around the CPU socket.</li>
+                        <li>Secure it according to its mechanism (e.g., push-pins, screws, clips). Ensure even pressure.</li>
+                        <li>Connect the CPU fan cable to the <code class="code-inline">CPU_FAN</code> header on the motherboard.</li>
+                    </ul>
+                </li>
+                <li><strong>AIO Liquid Coolers:</strong>
+                    <ul>
+                        <li>Mount the radiator and fans to the case (top, front, or rear, depending on case compatibility and preference).</li>
+                        <li>Apply thermal paste if not pre-applied on the cold plate.</li>
+                        <li>Attach the pump/block unit to the CPU, securing it with the appropriate mounting hardware for your CPU socket.</li>
+                        <li>Connect the pump power cable (to <code class="code-inline">CPU_FAN</code>, <code class="code-inline">PUMP_FAN</code>, or <code class="code-inline">AIO_PUMP</code> header) and fan cables to motherboard headers or a fan controller.</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+        <section id="assembly-wiring">
+            <h3>8. Connecting Cables (The "Wiring" Phase)</h3>
+            <p>This is often the most intimidating part. Take your time and refer to your motherboard and PSU manuals.</p>
+            <img src="{{ url_for('static', filename='images/guide_wiring_overview.avif') }}" alt="PC Wiring Diagram" class="step-image">
+            <em>(Ideal image: Diagram showing common motherboard connections)</em>
+            <ol>
+                <li><strong>Motherboard Power:</strong>
+                    <ul>
+                        <li>Connect the large <strong>24-pin ATX power cable</strong> from the PSU to the corresponding connector on the motherboard.</li>
+                        <li>Connect the <strong>4+4 pin or 8-pin CPU power cable</strong> (often labeled "CPU" or "EPS12V") from the PSU to the CPU power connector on the motherboard (usually near the CPU socket).</li>
+                    </ul>
+                </li>
+                <li><strong>GPU Power:</strong>
+                    <ul>
+                        <li>If your GPU requires external power, connect the appropriate <strong>6-pin, 8-pin, or 6+2 pin PCIe power cable(s)</strong> from the PSU to the GPU. Some high-end GPUs may require multiple connectors.</li>
+                    </ul>
+                </li>
+                <li><strong>Storage Drive Power:</strong>
+                    <ul>
+                        <li>Connect SATA power cables from the PSU to your SATA SSDs and HDDs.</li>
+                    </ul>
+                </li>
+                <li><strong>Front Panel Connectors:</strong> These small, individual pins connect the case's power button, reset button, power LED, HDD LED, and front USB/audio ports to the motherboard.
+                    <ul>
+                        <li>Consult your motherboard manual for the exact layout of the front panel header (often labeled <code class="code-inline">F_PANEL</code> or similar).</li>
+                        <li>Carefully connect each wire, paying attention to polarity (+/-) for the LEDs (usually, the colored wire is positive, white/black is negative). Power and reset switches are not polarity sensitive.</li>
+                        <li>Connect front USB 2.0, USB 3.0/3.1/3.2, and HD Audio internal cables from the case to their respective headers on the motherboard. These are usually keyed to only fit one way.</li>
+                    </ul>
+                </li>
+                <li><strong>Case Fans:</strong> Connect case fan cables to <code class="code-inline">SYS_FAN</code> or <code class="code-inline">CHA_FAN</code> headers on the motherboard, or to a fan hub/controller if your case has one.</li>
+            </ol>
+        </section>
+
+        <section id="assembly-final">
+            <h3>9. Cable Management & Closing Up</h3>
+            <ol>
+                <li><strong>Cable Management:</strong> Route cables neatly behind the motherboard tray and use zip ties or Velcro straps to secure them. Good cable management improves airflow and aesthetics.</li>
+                <li><strong>Final Check:</strong> Double-check all connections. Ensure no loose screws or tools are inside the case.</li>
+                <li><strong>Close the Case:</strong> Reinstall the side panels.</li>
+            </ol>
+        </section>
+
+        <section id="assembly-first-boot">
+            <h3>10. First Boot & OS Installation</h3>
+            <ol>
+                <li>Connect your monitor, keyboard, mouse, and power cable.</li>
+                <li>Turn on the PC! Hopefully, it powers up. Look for POST (Power-On Self-Test) messages or your motherboard's splash screen.</li>
+                <li>Enter BIOS/UEFI (usually by pressing <code class="code-inline">Del</code> or <code class="code-inline">F2</code> on startup).
+                    <ul>
+                        <li>Verify that the CPU, RAM, and storage drives are detected.</li>
+                        <li>Set the boot order to prioritize your OS installation USB drive (if you haven't already).</li>
+                        <li>Enable XMP (for Intel) or DOCP/EXPO (for AMD) profiles for your RAM if you want it to run at its advertised speed (optional for first boot, can do later).</li>
+                        <li>Save and exit.</li>
+                    </ul>
+                </li>
+                <li>Proceed to install your operating system (refer to our <a href="{{ url_for('os_guide') }}">OS Installation Guide</a>).</li>
+            </ol>
+            <div class="important-note">
+                <strong>Troubleshooting:</strong> If the PC doesn't boot, don't panic. Common issues include loose cables, incorrectly seated RAM or GPU, or missed power connections. Systematically re-check your work. Motherboard manuals often have troubleshooting beep codes or LED indicators.
+            </div>
+        </section>
+    </div>
+
+    <div id="Disassembly" class="guide-tab-content">
+        <h2>Part II: Disassembling Your PC</h2>
+        <p>This section covers taking a PC apart, whether for cleaning, upgrading, or troubleshooting.</p>
+
+        <div class="warning-note">
+            <strong>Always ensure the PC is completely powered off and unplugged from the wall outlet before starting disassembly. Press the power button a few times to discharge any residual electricity. Ground yourself regularly.</strong>
+        </div>
+
+        <ol>
+            <li>
+                <strong>Preparation:</strong>
+                <ul>
+                    <li>Gather your tools (Phillips screwdriver, anti-static strap).</li>
+                    <li>Prepare a clean, well-lit workspace.</li>
+                    <li>Have containers ready for screws and small parts. Taking photos as you go can be helpful for reassembly.</li>
+                </ul>
+            </li>
+            <li><strong>Disconnect External Peripherals:</strong> Unplug the power cord, monitor, keyboard, mouse, Ethernet cable, speakers, and any other external devices.</li>
+            <li><strong>Open the Case:</strong> Remove the side panels.</li>
+            <li>
+                <strong>Disconnect Internal Cables (Reverse of Assembly - Step 8):</strong>
+                <img src="{{ url_for('static', filename='images/guide_disconnect_cables.jpg') }}" alt="Disconnecting internal cables" class="step-image">
+                <em>(Ideal image: Hand carefully unplugging a power connector)</em>
+                <ul>
+                    <li>GPU power cable(s).</li>
+                    <li>Motherboard 24-pin ATX power and CPU 4/8-pin power.</li>
+                    <li>SATA power and data cables from storage drives.</li>
+                    <li>Front panel connectors (power switch, LEDs, USB, audio) - take a photo or note their orientation if you're unsure.</li>
+                    <li>Case fan cables.</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Remove Graphics Card (GPU):</strong>
+                <ul>
+                    <li>Unscrew the GPU's mounting bracket from the case.</li>
+                    <li>Press the release tab/lever on the PCIe slot and gently pull the GPU straight out.</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Remove RAM Modules:</strong>
+                <ul>
+                    <li>Push down on the clips at one or both ends of each RAM slot.</li>
+                    <li>The RAM module should pop up slightly; gently pull it out.</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Remove Storage Drives (SSDs/HDDs):</strong>
+                <ul>
+                    <li>Unscrew them from their drive bays or release them from tool-less trays.</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Remove CPU Cooler:</strong>
+                <ul>
+                    <li>This varies greatly. Disconnect the fan cable first.</li>
+                    <li>For air coolers, typically unscrew or unclip the mounting mechanism. The cooler might be stuck to the CPU due to dried thermal paste; gently twist it to break the seal before pulling it off. Do not yank.</li>
+                    <li>For AIOs, unscrew the pump/block from the CPU mounting, then detach the radiator from the case.</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Remove the CPU (Optional - only if necessary):</strong>
+                <div class="important-note">Be extremely careful with the CPU pins (AMD) or socket pins (Intel).</div>
+                <ul>
+                    <li>Open the CPU socket lever.</li>
+                    <li>Gently lift the CPU straight out. Immediately place it in its original plastic clamshell or an anti-static bag.</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Remove the Motherboard:</strong>
+                <ul>
+                    <li>Unscrew all the screws holding the motherboard to the case standoffs.</li>
+                    <li>Carefully lift the motherboard out of the case, being mindful of the I/O shield.</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Remove the Power Supply Unit (PSU):</strong>
+                <ul>
+                    <li>Unscrew the four screws holding it to the back of the case.</li>
+                    <li>Slide it out (you might need to manage its non-modular cables if any are still attached to case components like fan hubs).</li>
+                </ul>
+            </li>
+            <li><strong>Clean Components (Optional):</strong> While disassembled, it's a good time to clean dust from components using compressed air.</li>
+        </ol>
+        <p>Disassembly is essentially the reverse of assembly. Keep track of your screws and parts!</p>
+    </div>
+
+    <p><strong>Disclaimer:</strong> This guide provides general steps. Always prioritize the specific instructions in your component manuals. Work at your own risk. We are not responsible for any damage caused by following this guide.</p>
+</article>
+
+<script>
+function openGuideTab(evt, guideName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("guide-tab-content");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+        tabcontent[i].classList.remove("active");
+    }
+    tablinks = document.getElementsByClassName("guide-tab-button");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].classList.remove("active");
+    }
+    document.getElementById(guideName).style.display = "block";
+    document.getElementById(guideName).classList.add("active");
+    evt.currentTarget.classList.add("active");
+}
+
+// Ensure the first tab (Assembly) is active on page load
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if there's an active tab button, if not, make the first one active
+    const firstTabButton = document.querySelector('.guide-tab-button');
+    if (firstTabButton && !document.querySelector('.guide-tab-button.active')) {
+        firstTabButton.click();
+    } else if (document.querySelector('.guide-tab-button.active')) {
+        // If an active tab is already set (e.g. by URL hash later), ensure its content is visible
+         document.querySelector('.guide-tab-button.active').click();
+    }
+});
+</script>
+{% endblock %}
